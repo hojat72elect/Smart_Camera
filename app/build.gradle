@@ -7,7 +7,7 @@ android {
     compileSdkVersion 32
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        applicationId "ca.on.sudbury.hojat.smartcamera"
+        applicationId "ca.hojat.smartcamera"
         minSdkVersion 21
         targetSdkVersion 32
         versionCode 1

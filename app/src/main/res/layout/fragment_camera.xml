@@ -7,7 +7,7 @@
 
         <variable
             name="fragment"
-            type="ca.on.sudbury.hojat.smartcamera.feature_camera.CameraFragment" />
+            type="ca.hojat.smartcamera.feature_camera.CameraFragment" />
 
         <variable
             name="flash"
@@ -15,7 +15,7 @@
 
         <variable
             name="timer"
-            type="ca.on.sudbury.hojat.smartcamera.core.CameraTimer" />
+            type="ca.hojat.smartcamera.core.CameraTimer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

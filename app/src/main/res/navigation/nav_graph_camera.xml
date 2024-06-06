@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/camera_fragment"
-        android:name="ca.on.sudbury.hojat.smartcamera.feature_camera.CameraFragment"
+        android:name="ca.hojat.smartcamera.feature_camera.CameraFragment"
         android:label="CameraFragment"
         tools:layout="@layout/fragment_camera">
 
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/gallery_fragment"
 
-        android:name="ca.on.sudbury.hojat.smartcamera.feature_gallery.GalleryFragment"
+        android:name="ca.hojat.smartcamera.feature_gallery.GalleryFragment"
         android:label="GalleryFragment"
         tools:layout="@layout/fragment_gallery">
 
