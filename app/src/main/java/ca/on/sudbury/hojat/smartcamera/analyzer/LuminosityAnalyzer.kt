@@ -4,21 +4,18 @@ import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import java.nio.ByteBuffer
 import java.util.ArrayDeque
-import java.util.ArrayList
 
 /**
  * Our custom image analysis class.
  *
- * <p>All we need to do is override the function `analyze` with our desired operations. Here,
+ * All we need to do is override the function `analyze` with our desired operations. Here,
  * we compute the average luminosity of the image by looking at the Y plane of the YUV frame.
  */
 class LuminosityAnalyzer(listener: LumaListener? = null) : ImageAnalysis.Analyzer {
-    private val frameRateWindow = 8
+
     private val frameTimestamps = ArrayDeque<Long>(5)
     private val listeners = ArrayList<LumaListener>().apply { listener?.let { add(it) } }
-    private var lastAnalyzedTimestamp = 0L
-    var framesPerSecond: Double = -1.0
-        private set
+    private var framesPerSecond = -1.0
 
     /**
      * Helper extension function used to extract a byte array from an image plane buffer
@@ -33,11 +30,11 @@ class LuminosityAnalyzer(listener: LumaListener? = null) : ImageAnalysis.Analyze
     /**
      * Analyzes an image to produce a result.
      *
-     * <p>The caller is responsible for ensuring this analysis method can be executed quickly
+     * The caller is responsible for ensuring this analysis method can be executed quickly
      * enough to prevent stalls in the image acquisition pipeline. Otherwise, newly available
      * images will not be acquired and analyzed.
      *
-     * <p>The image passed to this method becomes invalid after this method returns. The caller
+     * The image passed to this method becomes invalid after this method returns. The caller
      * should not store external references to this image, as these references will become
      * invalid.
      *
@@ -58,7 +55,7 @@ class LuminosityAnalyzer(listener: LumaListener? = null) : ImageAnalysis.Analyze
         frameTimestamps.push(currentTime)
 
         // Compute the FPS using a moving average
-        while (frameTimestamps.size >= frameRateWindow) frameTimestamps.removeLast()
+        while (frameTimestamps.size >= FRAME_RATE_WINDOW) frameTimestamps.removeLast()
         val timestampFirst = frameTimestamps.peekFirst() ?: currentTime
         val timestampLast = frameTimestamps.peekLast() ?: currentTime
         framesPerSecond = 1.0 / ((timestampFirst - timestampLast) /
@@ -67,12 +64,11 @@ class LuminosityAnalyzer(listener: LumaListener? = null) : ImageAnalysis.Analyze
         // Analysis could take an arbitrarily long amount of time
         // Since we are running in a different thread, it won't stall other use cases
 
-        lastAnalyzedTimestamp = frameTimestamps.first
 
-        // Since format in ImageAnalysis is YUV, image.planes[0] contains the luminance plane
+        // Since format in ImageAnalysis is YUV, image.planes[0] contains the luminance plane.
         val buffer = image.planes[0].buffer
 
-        // Extract image data from callback object
+        // Extract image data from callback object.
         val data = buffer.toByteArray()
 
         // Convert the data into an array of pixel values ranging 0-255
@@ -86,7 +82,13 @@ class LuminosityAnalyzer(listener: LumaListener? = null) : ImageAnalysis.Analyze
 
         image.close()
     }
+
+    companion object {
+        private const val FRAME_RATE_WINDOW = 8
+    }
 }
 
-/** Helper type alias used for analysis use case callbacks */
+/**
+ *  Helper type alias used for analysis use case callbacks
+ */
 typealias LumaListener = (luma: Double) -> Unit
