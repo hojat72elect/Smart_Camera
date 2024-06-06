@@ -1,8 +1,8 @@
 package ca.on.sudbury.hojat.smartcamera
 
-import ca.on.sudbury.hojat.smartcamera.camera.CameraUseCase
-import ca.on.sudbury.hojat.smartcamera.camera.CameraUseCaseImpl
-import ca.on.sudbury.hojat.smartcamera.camera.CameraViewModel
+import ca.on.sudbury.hojat.smartcamera.feature_camera.CameraUseCase
+import ca.on.sudbury.hojat.smartcamera.feature_camera.CameraUseCaseImpl
+import ca.on.sudbury.hojat.smartcamera.feature_camera.CameraViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

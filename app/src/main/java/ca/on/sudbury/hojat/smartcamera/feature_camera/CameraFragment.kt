@@ -1,4 +1,4 @@
-package ca.on.sudbury.hojat.smartcamera.camera
+package ca.on.sudbury.hojat.smartcamera.feature_camera
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -36,7 +36,7 @@ import ca.on.sudbury.hojat.smartcamera.KEY_EVENT_EXTRA
 import ca.on.sudbury.hojat.smartcamera.R
 import ca.on.sudbury.hojat.smartcamera.core.analyzer.LuminosityAnalyzer
 import ca.on.sudbury.hojat.smartcamera.databinding.FragmentCameraBinding
-import ca.on.sudbury.hojat.smartcamera.gallery.EXTENSION_WHITELIST
+import ca.on.sudbury.hojat.smartcamera.feature_gallery.EXTENSION_WHITELIST
 import ca.on.sudbury.hojat.smartcamera.core.CameraTimer
 import ca.on.sudbury.hojat.smartcamera.core.Constants
 import ca.on.sudbury.hojat.smartcamera.core.Constants.ANIMATION_FAST_MILLIS

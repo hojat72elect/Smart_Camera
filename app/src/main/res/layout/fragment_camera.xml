@@ -7,7 +7,7 @@
 
         <variable
             name="fragment"
-            type="ca.on.sudbury.hojat.smartcamera.camera.CameraFragment" />
+            type="ca.on.sudbury.hojat.smartcamera.feature_camera.CameraFragment" />
 
         <variable
             name="flash"

@@ -1,4 +1,4 @@
-package ca.on.sudbury.hojat.smartcamera.camera
+package ca.on.sudbury.hojat.smartcamera.feature_camera
 
 interface CameraUseCase {
     fun sayHello(): String

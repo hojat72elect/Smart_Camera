@@ -1,4 +1,4 @@
-package ca.on.sudbury.hojat.smartcamera.gallery
+package ca.on.sudbury.hojat.smartcamera.feature_gallery
 
 import android.content.Intent
 import android.media.MediaScannerConnection
