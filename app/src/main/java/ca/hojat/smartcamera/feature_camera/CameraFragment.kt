@@ -20,8 +20,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.Toast
-import androidx.camera.core.*
+import androidx.camera.core.CameraInfoUnavailableException
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageAnalysis
+import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCapture.Metadata
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
@@ -32,8 +37,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.Navigation
 import androidx.window.WindowManager
 import ca.hojat.smartcamera.KEY_EVENT_ACTION
-import ca.hojat.smartcamera.R
 import ca.hojat.smartcamera.KEY_EVENT_EXTRA
+import ca.hojat.smartcamera.R
 import ca.hojat.smartcamera.core.CameraTimer
 import ca.hojat.smartcamera.core.Constants
 import ca.hojat.smartcamera.core.Constants.ANIMATION_FAST_MILLIS
