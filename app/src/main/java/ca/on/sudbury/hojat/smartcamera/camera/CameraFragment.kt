@@ -37,11 +37,11 @@ import ca.on.sudbury.hojat.smartcamera.R
 import ca.on.sudbury.hojat.smartcamera.core.analyzer.LuminosityAnalyzer
 import ca.on.sudbury.hojat.smartcamera.databinding.FragmentCameraBinding
 import ca.on.sudbury.hojat.smartcamera.gallery.EXTENSION_WHITELIST
-import ca.on.sudbury.hojat.smartcamera.core.utils.CameraTimer
-import ca.on.sudbury.hojat.smartcamera.core.utils.Constants
-import ca.on.sudbury.hojat.smartcamera.core.utils.Constants.ANIMATION_FAST_MILLIS
-import ca.on.sudbury.hojat.smartcamera.core.utils.Constants.ANIMATION_SLOW_MILLIS
-import ca.on.sudbury.hojat.smartcamera.core.utils.extensions.simulateClick
+import ca.on.sudbury.hojat.smartcamera.core.CameraTimer
+import ca.on.sudbury.hojat.smartcamera.core.Constants
+import ca.on.sudbury.hojat.smartcamera.core.Constants.ANIMATION_FAST_MILLIS
+import ca.on.sudbury.hojat.smartcamera.core.Constants.ANIMATION_SLOW_MILLIS
+import ca.on.sudbury.hojat.smartcamera.core.extensions.simulateClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import java.io.File
