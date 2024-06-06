@@ -15,11 +15,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import ca.on.sudbury.hojat.smartcamera.BuildConfig
-import ca.on.sudbury.hojat.smartcamera.R
-import ca.on.sudbury.hojat.smartcamera.databinding.FragmentGalleryBinding
+import ca.hojat.smartcamera.BuildConfig
+import ca.hojat.smartcamera.R
 import ca.hojat.smartcamera.core.extensions.padWithDisplayCutout
 import ca.hojat.smartcamera.core.extensions.showImmersive
+import ca.hojat.smartcamera.databinding.FragmentGalleryBinding
 import java.io.File
 import java.util.Locale
 

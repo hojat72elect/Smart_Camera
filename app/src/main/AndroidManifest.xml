@@ -3,7 +3,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools"
-    package="ca.on.sudbury.hojat.smartcamera">
+    package="ca.hojat.smartcamera">
 
     <!-- Enable instant app support -->
     <dist:module dist:instant="true" />

@@ -9,10 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.window.WindowManager
-import ca.on.sudbury.hojat.smartcamera.R
 import ca.hojat.smartcamera.core.CameraTimer
 import ca.hojat.smartcamera.core.Constants
-import timber.log.Timber
+import ca.hojat.smartcamera.R
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,6 +19,7 @@ import java.util.concurrent.ExecutorService
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
+import timber.log.Timber
 
 class CameraViewModel(private val useCase: CameraUseCase) : ViewModel() {
 
