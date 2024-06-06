@@ -15,7 +15,7 @@
 
         <variable
             name="timer"
-            type="ca.on.sudbury.hojat.smartcamera.utils.CameraTimer" />
+            type="ca.on.sudbury.hojat.smartcamera.core.utils.CameraTimer" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

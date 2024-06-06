@@ -18,8 +18,8 @@ import androidx.navigation.fragment.navArgs
 import ca.on.sudbury.hojat.smartcamera.BuildConfig
 import ca.on.sudbury.hojat.smartcamera.R
 import ca.on.sudbury.hojat.smartcamera.databinding.FragmentGalleryBinding
-import ca.on.sudbury.hojat.smartcamera.utils.extensions.padWithDisplayCutout
-import ca.on.sudbury.hojat.smartcamera.utils.extensions.showImmersive
+import ca.on.sudbury.hojat.smartcamera.core.utils.extensions.padWithDisplayCutout
+import ca.on.sudbury.hojat.smartcamera.core.utils.extensions.showImmersive
 import java.io.File
 import java.util.Locale
 

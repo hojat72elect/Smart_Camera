@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModel
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.window.WindowManager
 import ca.on.sudbury.hojat.smartcamera.R
-import ca.on.sudbury.hojat.smartcamera.utils.CameraTimer
-import ca.on.sudbury.hojat.smartcamera.utils.Constants
+import ca.on.sudbury.hojat.smartcamera.core.utils.CameraTimer
+import ca.on.sudbury.hojat.smartcamera.core.utils.Constants
 import timber.log.Timber
 import java.io.File
 import java.text.SimpleDateFormat

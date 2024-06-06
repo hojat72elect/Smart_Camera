@@ -1,4 +1,4 @@
-package ca.on.sudbury.hojat.smartcamera.analyzer
+package ca.on.sudbury.hojat.smartcamera.core.analyzer
 
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy

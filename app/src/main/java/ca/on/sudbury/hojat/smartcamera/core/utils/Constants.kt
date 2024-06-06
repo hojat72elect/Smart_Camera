@@ -1,4 +1,4 @@
-package ca.on.sudbury.hojat.smartcamera.utils
+package ca.on.sudbury.hojat.smartcamera.core.utils
 
 import android.Manifest
 import android.view.View

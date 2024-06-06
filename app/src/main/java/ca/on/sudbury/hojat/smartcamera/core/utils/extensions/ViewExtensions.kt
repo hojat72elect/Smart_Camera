@@ -1,10 +1,10 @@
-package ca.on.sudbury.hojat.smartcamera.utils.extensions
+package ca.on.sudbury.hojat.smartcamera.core.utils.extensions
 
 import android.os.Build
 import android.view.DisplayCutout
 import android.view.View
 import androidx.annotation.RequiresApi
-import ca.on.sudbury.hojat.smartcamera.utils.Constants.ANIMATION_FAST_MILLIS
+import ca.on.sudbury.hojat.smartcamera.core.utils.Constants.ANIMATION_FAST_MILLIS
 
 
 /**

@@ -1,4 +1,4 @@
-package ca.on.sudbury.hojat.smartcamera.utils.shared
+package ca.on.sudbury.hojat.smartcamera.core.utils.shared
 
 import androidx.lifecycle.Observer
 
