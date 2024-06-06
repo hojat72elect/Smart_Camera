@@ -3,7 +3,6 @@ package ca.on.sudbury.hojat.smartcamera.analyzer
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.ImageProxy
 import java.nio.ByteBuffer
-import java.util.ArrayDeque
 
 /**
  * Our custom image analysis class.
@@ -52,12 +51,12 @@ class LuminosityAnalyzer(listener: LumaListener? = null) : ImageAnalysis.Analyze
 
         // Keep track of frames analyzed
         val currentTime = System.currentTimeMillis()
-        frameTimestamps.push(currentTime)
+        frameTimestamps.addFirst(currentTime)
 
         // Compute the FPS using a moving average
         while (frameTimestamps.size >= FRAME_RATE_WINDOW) frameTimestamps.removeLast()
-        val timestampFirst = frameTimestamps.peekFirst() ?: currentTime
-        val timestampLast = frameTimestamps.peekLast() ?: currentTime
+        val timestampFirst = frameTimestamps.firstOrNull() ?: currentTime
+        val timestampLast = frameTimestamps.firstOrNull() ?: currentTime
         framesPerSecond = 1.0 / ((timestampFirst - timestampLast) /
                 frameTimestamps.size.coerceAtLeast(1).toDouble()) * 1000.0
 

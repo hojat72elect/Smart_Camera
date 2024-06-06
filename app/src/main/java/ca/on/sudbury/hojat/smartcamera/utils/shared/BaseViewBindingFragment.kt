@@ -13,15 +13,6 @@ abstract class BaseViewBindingFragment<T : ViewBinding>(
 
     private var safeBinding: T? = null
 
-    /**
-     * Access type safe views from [layout]
-     *
-     * This should only be accessed between [onViewCreated] and [onDestroyView] lifecycles
-     *
-     * @throws KotlinNullPointerException if accessed outside of correct lifecycle as mentioned above
-     */
-    val binding: T get() = safeBinding!!
-
     final override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

@@ -1,26 +1,26 @@
 package ca.on.sudbury.hojat.smartcamera.gallery
 
+import android.content.Intent
+import android.media.MediaScannerConnection
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.MimeTypeMap
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import java.io.File
-import android.content.Intent
-import android.media.MediaScannerConnection
-import android.os.Build
-import android.webkit.MimeTypeMap
-import androidx.core.content.FileProvider
-import ca.on.sudbury.hojat.smartcamera.utils.extensions.padWithDisplayCutout
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import ca.on.sudbury.hojat.smartcamera.BuildConfig
 import ca.on.sudbury.hojat.smartcamera.R
 import ca.on.sudbury.hojat.smartcamera.databinding.FragmentGalleryBinding
+import ca.on.sudbury.hojat.smartcamera.utils.extensions.padWithDisplayCutout
 import ca.on.sudbury.hojat.smartcamera.utils.extensions.showImmersive
+import java.io.File
 import java.util.Locale
 
 val EXTENSION_WHITELIST = arrayOf("JPG")

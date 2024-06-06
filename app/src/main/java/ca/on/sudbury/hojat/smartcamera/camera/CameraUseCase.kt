@@ -4,7 +4,7 @@ interface CameraUseCase {
     fun sayHello(): String
 }
 
-class CameraUseCaseImpl() : CameraUseCase {
+class CameraUseCaseImpl : CameraUseCase {
     override fun sayHello() = "Hello!\nI'm a Camera UseCase."
 
 }

@@ -65,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
                 true
             }
+
             else -> super.onKeyDown(keyCode, event)
         }
 

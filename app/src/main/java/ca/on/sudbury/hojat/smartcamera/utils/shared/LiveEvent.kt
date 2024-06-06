@@ -5,11 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 
 
-abstract class LiveEvent<T> : LiveData<Event<T>> {
-
-    constructor() : super()
-
-    constructor(value: T) : super(Event(value))
+abstract class LiveEvent<T>(value: T) : LiveData<Event<T>>(Event(value)) {
 
     override fun observeForever(observer: Observer<in Event<T>>) {
         requireNoObserverRegistered()

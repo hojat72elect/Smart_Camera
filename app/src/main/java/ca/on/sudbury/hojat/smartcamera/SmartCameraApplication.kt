@@ -6,7 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-class SmartCameraApplication() : Application() {
+class SmartCameraApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 

@@ -8,11 +8,7 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.flow.Flow
 
 
-abstract class BaseFragment : Fragment {
-
-    constructor() : super()
-
-    constructor(@LayoutRes layout: Int) : super(layout)
+abstract class BaseFragment() : Fragment() {
 
 
     final override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

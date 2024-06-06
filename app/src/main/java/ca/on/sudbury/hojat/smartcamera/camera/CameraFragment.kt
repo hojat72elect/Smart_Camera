@@ -44,17 +44,15 @@ import ca.on.sudbury.hojat.smartcamera.utils.Constants.ANIMATION_SLOW_MILLIS
 import ca.on.sudbury.hojat.smartcamera.utils.extensions.simulateClick
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import java.io.File
+import java.util.Locale
+import java.util.concurrent.Executors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
-import java.io.File
-import java.util.*
-import java.util.concurrent.Executors
 
-
-private const val PERMISSIONS_REQUEST_CODE = 10
 
 /**
  * Main fragment for this app. Implements all camera operations including:
@@ -358,6 +356,7 @@ class CameraFragment : Fragment() {
                     binding.countdown.text = i.toString()
                     delay(1000)
                 }
+
                 else -> binding.countdown.text = ""
             }
             binding.countdown.text = ""
@@ -500,7 +499,10 @@ class CameraFragment : Fragment() {
         else -> R.drawable.ic_flash_auto
     }
 
-    /** Enabled or disabled a button to switch cameras depending on the available cameras */
+    /**
+     * Enable or disable the button to switch cameras depending on the available cameras on the device.
+     * For example, on a ChromeBook, we usually just have one camera.
+     */
     private fun updateCameraSwitchButton() {
         try {
             binding.cameraSwitchButton.isEnabled =
@@ -510,5 +512,9 @@ class CameraFragment : Fragment() {
         }
     }
 
+
+    companion object {
+        private const val PERMISSIONS_REQUEST_CODE = 10
+    }
 
 }
