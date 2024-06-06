@@ -1,5 +1,10 @@
-Smart Camera Android
+## Smart Camera Android
 
-This was a pretty normal and straight-forward native Android app I made a while back. Right now, I'm
-in the process of migrating this to a React Native project (will archive this repo when I'm finished
-with migrating its operations to my new RN app).
+This app is at a good enough level of maturity now and I am planning to migrate it to Kotlin Multi
+Platform so i can publish it on various platforms.
+
+
+### Features :
+1- Timer
+2- Flash
+3- Gallery
