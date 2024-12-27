@@ -17,7 +17,7 @@ class LuminosityAnalyzer(listener: LumaListener? = null) : ImageAnalysis.Analyze
     private var framesPerSecond = -1.0
 
     /**
-     * Helper extension function used to extract a byte array from an image plane buffer
+     * Extension function used to extract a byte array from an image plane buffer.
      */
     private fun ByteBuffer.toByteArray(): ByteArray {
         rewind()    // Rewind the buffer to zero

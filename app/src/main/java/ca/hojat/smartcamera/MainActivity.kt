@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.Q) {
             // Workaround for Android Q memory leak issue in IRequestFinishCallback$Stub.

@@ -4,7 +4,6 @@ import android.app.Dialog
 import android.view.WindowManager
 import ca.hojat.smartcamera.core.Constants
 
-
 /** Same as show() on a dialog but also sets immersive mode in the dialog's window */
 fun Dialog.showImmersive() {
     // Set the dialog to not focusable

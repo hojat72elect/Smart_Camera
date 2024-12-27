@@ -4,13 +4,11 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Enable instant app support -->
+    <!-- Enable instant app support (do I need it that much right now?) -->
     <dist:module dist:instant="true" />
 
-    <!-- Declare features -->
     <uses-feature android:name="android.hardware.camera" />
 
-    <!-- Declare permissions -->
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -28,7 +26,6 @@
             android:icon="@mipmap/ic_launcher"
             android:resizeableActivity="true"
             android:rotationAnimation="seamless"
-            android:screenOrientation="fullUser"
             android:theme="@style/AppTheme"
             tools:targetApi="O">
 
@@ -67,7 +64,7 @@
 
         </activity>
 
-        <!-- FileProvider used to share photos with other apps -->
+        <!-- FileProvider we use to share our photos with the other apps -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
