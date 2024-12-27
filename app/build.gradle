@@ -4,12 +4,12 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     defaultConfig {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         applicationId "ca.hojat.smartcamera"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0.0"
     }
@@ -37,6 +37,7 @@ android {
     buildFeatures{
         viewBinding true
     }
+    namespace 'ca.hojat.smartcamera'
 }
 
 dependencies {

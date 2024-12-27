@@ -10,8 +10,8 @@ import androidx.lifecycle.Observer
  */
 class EventObserver<T>(private val onEvent: (T) -> Unit) : Observer<Event<T>> {
 
-    override fun onChanged(event: Event<T>?) {
-        event?.getContent()?.let { value ->
+    override fun onChanged(value: Event<T>) {
+        value.getContent()?.let { value ->
             onEvent(value)
         }
     }
