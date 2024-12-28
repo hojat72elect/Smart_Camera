@@ -223,9 +223,6 @@ class CameraFragment : Fragment() {
             // Set up the camera and its use cases
             setUpCamera()
         }
-
-        // let's see if koin works correctly here
-        Toast.makeText(requireContext(), vm.sayHello(), Toast.LENGTH_SHORT).show()
     }
 
     /**
