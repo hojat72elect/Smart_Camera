@@ -11,10 +11,10 @@ import android.webkit.MimeTypeMap
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import ca.hojat.smartcamera.BuildConfig
 import ca.hojat.smartcamera.R
 import ca.hojat.smartcamera.core.extensions.padWithDisplayCutout
@@ -40,12 +40,12 @@ class GalleryFragment internal constructor() : Fragment() {
 
     private lateinit var mediaList: MutableList<File>
 
-    /** Adapter class used to present a fragment containing one photo or video as a page */
-    inner class MediaPagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount(): Int = mediaList.size
-        override fun getItem(position: Int): Fragment = PhotoFragment.create(mediaList[position])
-        override fun getItemPosition(obj: Any): Int = POSITION_NONE
+    // Adapter for each photo in the viewpager of the gallery.
+    inner class MediaPagerAdapter(fragmentActivity: FragmentActivity): FragmentStateAdapter(fragmentActivity){
+        override fun getItemCount()=mediaList.size
+
+        override fun createFragment(position: Int): Fragment =PhotoFragment.create(mediaList[position])
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,7 +85,7 @@ class GalleryFragment internal constructor() : Fragment() {
         // Populate the ViewPager and implement a cache of two media items
         fragmentGalleryBinding.photoViewPager.apply {
             offscreenPageLimit = 2
-            adapter = MediaPagerAdapter(childFragmentManager)
+            adapter = MediaPagerAdapter(requireActivity())
         }
 
         // Make sure that the cutout "safe area" avoids the screen notch if any

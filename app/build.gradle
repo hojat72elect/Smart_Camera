@@ -109,6 +109,9 @@ dependencies {
     // CameraX View class
     implementation "androidx.camera:camera-view:$camerax_version"
 
+    // viewpager
+    implementation 'androidx.viewpager2:viewpager2:1.1.0'
+
     // CameraX Extensions library
     implementation "androidx.camera:camera-extensions:$camerax_version"
 
