@@ -33,8 +33,13 @@ android {
         enabled = true
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
+        compose true
+    }
+
+    composeOptions{
+        kotlinCompilerExtensionVersion '1.5.5'
     }
     namespace 'ca.hojat.smartcamera'
 }
@@ -115,5 +120,22 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     kapt 'com.github.bumptech.glide:compiler:4.16.0'
 
+    // jetpack compose
+    def compose_version = "1.5.5"
+
+    // Jetpack Compose UI
+    implementation("androidx.compose.ui:ui:$compose_version")
+    // Jetpack Compose Graphics
+    implementation("androidx.compose.ui:ui-graphics:$compose_version")
+    // Jetpack Compose Preview
+    implementation("androidx.compose.ui:ui-tooling-preview:$compose_version")
+    // Jetpack Compose UI Tooling
+    debugImplementation("androidx.compose.ui:ui-tooling:1.7.6")
+    // Jetpack Compose UI Test Manifest
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$compose_version")
+    // Integration with activities
+    implementation("androidx.activity:activity-compose:1.6.0")
+    // Material Design 3
+    implementation("androidx.compose.material3:material3:1.0.0")
 
 }
