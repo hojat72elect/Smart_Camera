@@ -61,6 +61,7 @@ fun CameraPreview(modifier: Modifier = Modifier) {
 
     Box(modifier = modifier) {
         if (hasCamPermission) {
+            // The camera preview.
             AndroidView(
                 factory = { context ->
                     val previewView = PreviewView(context)
@@ -88,6 +89,7 @@ fun CameraPreview(modifier: Modifier = Modifier) {
         val isPressed by interactionSource.collectIsPressedAsState()
         val alpha by animateFloatAsState(targetValue = if (isPressed) 0.5f else 1f, label = "alpha")
 
+        // The shutter button
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
