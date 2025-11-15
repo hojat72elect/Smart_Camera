@@ -108,7 +108,7 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(Color.Black.copy(alpha = animatedFlashAlpha))
+                        .background(Color.White.copy(alpha = animatedFlashAlpha))
                 )
             }
         }
