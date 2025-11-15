@@ -26,6 +26,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -40,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -111,6 +114,19 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                         .background(Color.White.copy(alpha = animatedFlashAlpha))
                 )
             }
+        }
+
+        IconButton(
+            onClick = { /* TODO */ },
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(14.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = R.drawable.flash_on),
+                contentDescription = "Toggle flash",
+                tint = Color.White
+            )
         }
 
         val interactionSource = remember { MutableInteractionSource() }
