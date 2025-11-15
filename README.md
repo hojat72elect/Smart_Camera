@@ -5,3 +5,9 @@ Current tech stack used in this app:
 <ul>
 <li>Jetpack Compose (for defining the UI of the app)</li>
 </ul>
+
+Current features of this camera : 
+
+<ul>
+<li>Camera live preview</li>
+</ul>
