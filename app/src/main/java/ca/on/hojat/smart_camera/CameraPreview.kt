@@ -1,8 +1,10 @@
 package ca.on.hojat.smart_camera
 
 import android.Manifest
+import android.content.ContentValues
 import android.content.Context
-import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -14,6 +16,7 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,15 +28,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
-import java.io.File
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Composable
-fun CameraPreview() {
+fun CameraPreview(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var hasCamPermission by remember { mutableStateOf(false) }
@@ -49,7 +51,7 @@ fun CameraPreview() {
         launcher.launch(Manifest.permission.CAMERA)
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = modifier) {
         if (hasCamPermission) {
             AndroidView(
                 factory = { context ->
@@ -84,30 +86,37 @@ fun CameraPreview() {
 }
 
 fun takePhoto(context: Context, imageCapture: ImageCapture) {
-    val photoFile = createFile(context)
-    val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+    val name = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
+        .format(System.currentTimeMillis())
+    val contentValues = ContentValues().apply {
+        put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+        put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Smart-Camera")
+        }
+    }
+
+    val outputOptions = ImageCapture.OutputFileOptions
+        .Builder(
+            context.contentResolver,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            contentValues
+        )
+        .build()
+
     imageCapture.takePicture(
         outputOptions,
         ContextCompat.getMainExecutor(context),
         object : ImageCapture.OnImageSavedCallback {
             override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                val savedUri = Uri.fromFile(photoFile)
-                Toast.makeText(context, "Photo saved: $savedUri", Toast.LENGTH_SHORT).show()
+                val msg = "Photo capture succeeded: ${output.savedUri}"
+                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
             }
 
             override fun onError(exc: ImageCaptureException) {
-                Toast.makeText(context, "Photo capture failed: ${exc.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Photo capture failed: ${exc.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
-    )
-}
-
-fun createFile(context: Context): File {
-    val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis())
-    val storageDir = context.externalMediaDirs.firstOrNull()
-    return File.createTempFile(
-        "JPEG_${timeStamp}_",
-        ".jpg",
-        storageDir
     )
 }
