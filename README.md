@@ -10,4 +10,6 @@ Current features of this camera :
 
 <ul>
 <li>Camera live preview</li>
+<li>Capturing image</li>
+<li>Saving the captured image to device</li>
 </ul>
