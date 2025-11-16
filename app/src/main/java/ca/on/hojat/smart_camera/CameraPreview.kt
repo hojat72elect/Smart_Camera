@@ -188,14 +188,12 @@ fun CameraPreview(modifier: Modifier = Modifier) {
 }
 
 fun takePhoto(context: Context, imageCapture: ImageCapture) {
-    val name = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
-        .format(System.currentTimeMillis())
+    val name = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(System.currentTimeMillis())
     val contentValues = ContentValues().apply {
         put(MediaStore.MediaColumns.DISPLAY_NAME, name)
         put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P)
             put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/Smart-Camera")
-        }
     }
 
     val outputOptions = ImageCapture.OutputFileOptions
