@@ -22,6 +22,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -32,6 +33,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -73,6 +75,7 @@ fun CameraPreview(modifier: Modifier = Modifier) {
         label = "flashAnimation"
     )
     var isFlashOn by remember { mutableStateOf(false) }
+    var lensFacing by remember { mutableStateOf(CameraSelector.LENS_FACING_BACK) }
 
 
     DisposableEffect(Unit) {
@@ -89,27 +92,31 @@ fun CameraPreview(modifier: Modifier = Modifier) {
         if (hasCameraPermission) {
             // The camera preview.
             Box(modifier = Modifier.fillMaxSize()) {
-                AndroidView(
-                    factory = { context ->
-                        val previewView = PreviewView(context)
-                        val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
-                        cameraProviderFuture.addListener({
-                            val cameraProvider = cameraProviderFuture.get()
-                            val preview = Preview.Builder().build()
-                            preview.surfaceProvider = previewView.surfaceProvider
-                            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-                            cameraProvider.unbindAll()
-                            cameraProvider.bindToLifecycle(
-                                lifecycleOwner,
-                                cameraSelector,
-                                preview,
-                                imageCapture
-                            )
-                        }, ContextCompat.getMainExecutor(context))
-                        previewView
-                    },
-                    modifier = Modifier.fillMaxSize()
-                )
+                key(lensFacing) {
+                    AndroidView(
+                        factory = { context ->
+                            val previewView = PreviewView(context)
+                            val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+                            cameraProviderFuture.addListener({
+                                val cameraProvider = cameraProviderFuture.get()
+                                val preview = Preview.Builder().build()
+                                preview.surfaceProvider = previewView.surfaceProvider
+                                val cameraSelector = CameraSelector.Builder()
+                                    .requireLensFacing(lensFacing)
+                                    .build()
+                                cameraProvider.unbindAll()
+                                cameraProvider.bindToLifecycle(
+                                    lifecycleOwner,
+                                    cameraSelector,
+                                    preview,
+                                    imageCapture
+                                )
+                            }, ContextCompat.getMainExecutor(context))
+                            previewView
+                        },
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -118,17 +125,31 @@ fun CameraPreview(modifier: Modifier = Modifier) {
             }
         }
 
-        IconButton(
-            onClick = { isFlashOn = isFlashOn.not() },
+        Column(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(14.dp)
         ) {
-            Icon(
-                painter = painterResource(id = if (isFlashOn) R.drawable.flash_on else R.drawable.flash_off),
-                contentDescription = "Toggle flash",
-                tint = Color.White
-            )
+            IconButton(onClick = { isFlashOn = isFlashOn.not() }) {
+                Icon(
+                    painter = painterResource(id = if (isFlashOn) R.drawable.flash_on else R.drawable.flash_off),
+                    contentDescription = "Toggle flash",
+                    tint = Color.White
+                )
+            }
+            IconButton(onClick = {
+                lensFacing = if (lensFacing == CameraSelector.LENS_FACING_BACK) {
+                    CameraSelector.LENS_FACING_FRONT
+                } else {
+                    CameraSelector.LENS_FACING_BACK
+                }
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.flip_camera),
+                    contentDescription = "Flip camera",
+                    tint = Color.White
+                )
+            }
         }
 
         val interactionSource = remember { MutableInteractionSource() }
