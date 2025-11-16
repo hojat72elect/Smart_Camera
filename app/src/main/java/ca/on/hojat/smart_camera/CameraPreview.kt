@@ -72,6 +72,8 @@ fun CameraPreview(modifier: Modifier = Modifier) {
         animationSpec = tween(100),
         label = "flashAnimation"
     )
+    var isFlashOn by remember { mutableStateOf(false) }
+
 
     DisposableEffect(Unit) {
         onDispose {
@@ -117,13 +119,13 @@ fun CameraPreview(modifier: Modifier = Modifier) {
         }
 
         IconButton(
-            onClick = { /* TODO */ },
+            onClick = { isFlashOn = isFlashOn.not() },
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(14.dp)
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.flash_on),
+                painter = painterResource(id = if (isFlashOn) R.drawable.flash_on else R.drawable.flash_off),
                 contentDescription = "Toggle flash",
                 tint = Color.White
             )
