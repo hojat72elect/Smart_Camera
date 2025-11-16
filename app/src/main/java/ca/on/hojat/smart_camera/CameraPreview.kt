@@ -53,21 +53,12 @@ fun CameraPreview(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     var hasCameraPermission by remember { mutableStateOf(false) }
-    val launcher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission(),
-        onResult = { isGranted ->
-            hasCameraPermission = isGranted
-        }
-    )
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission(), onResult = { isGranted -> hasCameraPermission = isGranted })
     val imageCapture = remember { ImageCapture.Builder().build() }
     val scope = rememberCoroutineScope()
     val mediaActionSound = remember { MediaActionSound().apply { load(MediaActionSound.SHUTTER_CLICK) } }
     var flashAlpha by remember { mutableFloatStateOf(0F) }
-    val animatedFlashAlpha by animateFloatAsState(
-        targetValue = flashAlpha,
-        animationSpec = tween(100),
-        label = "flashAnimation"
-    )
+    val animatedFlashAlpha by animateFloatAsState(targetValue = flashAlpha, animationSpec = tween(100), label = "flashAnimation")
     var isFlashOn by remember { mutableStateOf(false) }
     var lensFacing by remember { mutableIntStateOf(CameraSelector.LENS_FACING_BACK) }
 
@@ -95,16 +86,9 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                                 val cameraProvider = cameraProviderFuture.get()
                                 val preview = Preview.Builder().build()
                                 preview.surfaceProvider = previewView.surfaceProvider
-                                val cameraSelector = CameraSelector.Builder()
-                                    .requireLensFacing(lensFacing)
-                                    .build()
+                                val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
                                 cameraProvider.unbindAll()
-                                cameraProvider.bindToLifecycle(
-                                    lifecycleOwner,
-                                    cameraSelector,
-                                    preview,
-                                    imageCapture
-                                )
+                                cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, imageCapture)
                             }, ContextCompat.getMainExecutor(context))
                             previewView
                         },
@@ -168,11 +152,14 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                     interactionSource = interactionSource,
                     indication = null, // No ripple
                     onClick = {
+
+                        // before taking the photo, we determine the flash mode
+                        imageCapture.flashMode = if (isFlashOn) ImageCapture.FLASH_MODE_ON else ImageCapture.FLASH_MODE_OFF
+
                         takePhotoUseCase(
                             context = context,
                             scope = scope,
                             imageCapture = imageCapture,
-                            isFlashOn = isFlashOn,
                             onPhotoCaptured = {
                                 scope.launch {
                                     flashAlpha = 1f

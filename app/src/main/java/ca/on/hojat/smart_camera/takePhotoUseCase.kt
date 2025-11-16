@@ -21,12 +21,10 @@ fun takePhotoUseCase(
     context: Context,
     scope: CoroutineScope,
     imageCapture: ImageCapture,
-    isFlashOn: Boolean,
     onPhotoCaptured: () -> Unit,
     onSuccess: (Uri) -> Unit,
     onError: (ImageCaptureException) -> Unit
 ) {
-    imageCapture.flashMode = if (isFlashOn) ImageCapture.FLASH_MODE_ON else ImageCapture.FLASH_MODE_OFF
 
     imageCapture.takePicture(
         ContextCompat.getMainExecutor(context),
