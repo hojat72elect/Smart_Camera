@@ -128,26 +128,21 @@ fun CameraPreview(modifier: Modifier = Modifier) {
             // Timer button
             IconButton(onClick = {
                 timerState = when (timerState) {
-                    TimerState.OFF -> {
-                        Toast.makeText(context, "Timer 3 seconds", Toast.LENGTH_SHORT).show()
-                        TimerState.ON_3_SECONDS
-                    }
-                    TimerState.ON_3_SECONDS -> {
-                        Toast.makeText(context, "Timer 10 seconds", Toast.LENGTH_SHORT).show()
-                        TimerState.ON_10_SECONDS
-                    }
-                    TimerState.ON_10_SECONDS -> {
-                        Toast.makeText(context, "Timer is off", Toast.LENGTH_SHORT).show()
-                        TimerState.OFF
-                    }
+                    TimerState.OFF -> TimerState.ON_3_SECONDS
+                    TimerState.ON_3_SECONDS -> TimerState.ON_5_SECONDS
+                    TimerState.ON_5_SECONDS -> TimerState.ON_10_SECONDS
+                    TimerState.ON_10_SECONDS -> TimerState.OFF
                 }
             }) {
                 Icon(
-                    painter = painterResource(id = when(timerState) {
-                        TimerState.OFF -> R.drawable.timer_off
-                        TimerState.ON_3_SECONDS -> R.drawable.timer_3
-                        TimerState.ON_10_SECONDS -> R.drawable.timer_10
-                    }),
+                    painter = painterResource(
+                        id = when (timerState) {
+                            TimerState.OFF -> R.drawable.timer_off
+                            TimerState.ON_3_SECONDS -> R.drawable.timer_3
+                            TimerState.ON_5_SECONDS -> R.drawable.timer_5
+                            TimerState.ON_10_SECONDS -> R.drawable.timer_10
+                        }
+                    ),
                     contentDescription = "Timer Controller",
                     tint = Color.White
                 )
