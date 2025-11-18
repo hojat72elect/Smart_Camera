@@ -61,6 +61,7 @@ fun CameraPreview(modifier: Modifier = Modifier) {
     val animatedFlashAlpha by animateFloatAsState(targetValue = flashAlpha, animationSpec = tween(100), label = "flashAnimation")
     var isFlashOn by remember { mutableStateOf(false) }
     var lensFacing by remember { mutableIntStateOf(CameraSelector.LENS_FACING_BACK) }
+    var timerState by remember { mutableStateOf(TimerState.OFF) }
 
 
     DisposableEffect(Unit) {
@@ -120,6 +121,34 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                 Icon(
                     painter = painterResource(id = R.drawable.flip_camera),
                     contentDescription = "Flip camera",
+                    tint = Color.White
+                )
+            }
+
+            // Timer button
+            IconButton(onClick = {
+                timerState = when (timerState) {
+                    TimerState.OFF -> {
+                        Toast.makeText(context, "Timer 3 seconds", Toast.LENGTH_SHORT).show()
+                        TimerState.ON_3_SECONDS
+                    }
+                    TimerState.ON_3_SECONDS -> {
+                        Toast.makeText(context, "Timer 10 seconds", Toast.LENGTH_SHORT).show()
+                        TimerState.ON_10_SECONDS
+                    }
+                    TimerState.ON_10_SECONDS -> {
+                        Toast.makeText(context, "Timer is off", Toast.LENGTH_SHORT).show()
+                        TimerState.OFF
+                    }
+                }
+            }) {
+                Icon(
+                    painter = painterResource(id = when(timerState) {
+                        TimerState.OFF -> R.drawable.timer_off
+                        TimerState.ON_3_SECONDS -> R.drawable.timer_3
+                        TimerState.ON_10_SECONDS -> R.drawable.timer_10
+                    }),
+                    contentDescription = "Timer Controller",
                     tint = Color.White
                 )
             }
