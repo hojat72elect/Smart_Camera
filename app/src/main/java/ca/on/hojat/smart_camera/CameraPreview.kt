@@ -109,16 +109,7 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                 .padding(14.dp)
         ) {
 
-            // The flash button only works for the back camera (it won't be shown for teh selfie camera)
-            if (lensFacing == CameraSelector.LENS_FACING_BACK) {
-                IconButton(onClick = { isFlashOn = isFlashOn.not() }) {
-                    Icon(
-                        painter = painterResource(id = if (isFlashOn) R.drawable.flash_on else R.drawable.flash_off),
-                        contentDescription = "Toggle flash",
-                        tint = Color.White
-                    )
-                }
-            }
+            // Camera switching button (only back and front)
             IconButton(onClick = {
                 lensFacing = if (lensFacing == CameraSelector.LENS_FACING_BACK) {
                     CameraSelector.LENS_FACING_FRONT
@@ -131,6 +122,17 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                     contentDescription = "Flip camera",
                     tint = Color.White
                 )
+            }
+
+            // The flash button only works for the back camera (it won't be shown for teh selfie camera)
+            if (lensFacing == CameraSelector.LENS_FACING_BACK) {
+                IconButton(onClick = { isFlashOn = isFlashOn.not() }) {
+                    Icon(
+                        painter = painterResource(id = if (isFlashOn) R.drawable.flash_on else R.drawable.flash_off),
+                        contentDescription = "Toggle flash",
+                        tint = Color.White
+                    )
+                }
             }
         }
 
