@@ -186,6 +186,7 @@ fun CameraPreview(modifier: Modifier = Modifier) {
                             context = context,
                             scope = scope,
                             imageCapture = imageCapture,
+                            timerState = timerState,
                             onPhotoCaptured = {
                                 scope.launch {
                                     flashAlpha = 1f
