@@ -15,24 +15,24 @@ A feature-rich React Native camera app built with Expo SDK.
 
 1. Install dependencies:
 ```bash
-npm install
+bun install
 ```
 
 2. Start the development server:
 ```bash
-npm start
+bun run start
 ```
 
 3. Run on your preferred platform:
 ```bash
 # For iOS
-npm run ios
+bun run ios
 
 # For Android
-npm run android
+bun run android
 
 # For Web (limited camera support)
-npm run web
+bun run web
 ```
 
 ## Permissions
