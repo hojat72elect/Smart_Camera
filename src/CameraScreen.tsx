@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Alert, Text, TouchableOpacity, View,} from 'react-native';
+import {ActivityIndicator, Text, ToastAndroid, TouchableOpacity, View,} from 'react-native';
 import {CameraType, CameraView, FlashMode, useCameraPermissions} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import {Ionicons} from '@expo/vector-icons';
@@ -89,11 +89,11 @@ export function CameraScreen() {
 
                 if (photo!.uri) {
                     await MediaLibrary.saveToLibraryAsync(photo!.uri);
-                    Alert.alert('Success', 'Photo saved to your gallery!');
+                    ToastAndroid.show("photo was saved successfully", ToastAndroid.SHORT);
                 }
             } catch (error) {
                 console.error('Error taking picture:', error);
-                Alert.alert('Error', 'Failed to take picture');
+                ToastAndroid.show("Failed to save the picture!!!", ToastAndroid.SHORT);
             } finally {
                 setIsCapturing(false);
                 setCountdown(0);
