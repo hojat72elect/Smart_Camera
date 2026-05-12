@@ -1,7 +1,7 @@
 import React from 'react';
 import {StatusBar} from 'expo-status-bar';
 import {View} from 'react-native';
-import CameraScreen from './src/components/CameraScreen';
+import {CameraScreen} from './src/CameraScreen';
 
 export default function App() {
     return (

@@ -4,7 +4,7 @@ import {CameraType, CameraView, FlashMode, useCameraPermissions} from 'expo-came
 import * as MediaLibrary from 'expo-media-library';
 import {Ionicons} from '@expo/vector-icons';
 
-export default function CameraScreen() {
+export function CameraScreen() {
     const [permission, requestPermission] = useCameraPermissions();
     const [facing, setFacing] = useState<CameraType>('back');
     const [flash, setFlash] = useState<FlashMode>('off');
