@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Alert, StyleSheet, Text, TouchableOpacity, View,} from 'react-native';
+import {ActivityIndicator, Alert, Text, TouchableOpacity, View,} from 'react-native';
 import {CameraType, CameraView, FlashMode, useCameraPermissions} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import {Ionicons} from '@expo/vector-icons';
@@ -27,15 +27,36 @@ export default function CameraScreen() {
     }, [isTimerActive, countdown]);
 
     if (!permission) {
-        return <View style={styles.container}/>;
+        return <View style={{
+            flex: 1,
+            backgroundColor: '#000'
+        }}/>;
     }
 
     if (!permission.granted) {
         return (
-            <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>We need your permission to show the camera</Text>
-                <TouchableOpacity style={styles.permissionButton} onPress={requestPermission}>
-                    <Text style={styles.permissionButtonText}>Grant permission</Text>
+            <View style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 20
+            }}>
+                <Text style={{
+                    fontSize: 16,
+                    textAlign: 'center',
+                    marginBottom: 20,
+                    color: '#333'
+                }}>We need your permission to show the camera</Text>
+                <TouchableOpacity style={{
+                    backgroundColor: '#007AFF',
+                    paddingHorizontal: 20,
+                    paddingVertical: 10,
+                    borderRadius: 8
+                }} onPress={requestPermission}>
+                    <Text style={{
+                        color: 'white',
+                        fontSize: 16
+                    }}>Grant permission</Text>
                 </TouchableOpacity>
             </View>
         );
@@ -90,23 +111,53 @@ export default function CameraScreen() {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={{
+            flex: 1,
+            backgroundColor: '#000'
+        }}>
             <CameraView
-                style={styles.camera}
+                style={{flex: 1}}
                 facing={facing}
                 flash={flash}
                 ref={cameraRef}
             >
                 {/* Timer Countdown Overlay */}
                 {countdown > 0 && (
-                    <View style={styles.countdownContainer}>
-                        <Text style={styles.countdownText}>{countdown}</Text>
+                    <View style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: [{translateX: -50}, {translateY: -50}],
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        borderRadius: 50,
+                        width: 100,
+                        height: 100,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{
+                            fontSize: 48,
+                            fontWeight: 'bold',
+                            color: 'white'
+                        }}>{countdown}</Text>
                     </View>
                 )}
 
                 {/* Top Controls */}
-                <View style={styles.topControls}>
-                    <TouchableOpacity style={styles.controlButton} onPress={toggleFlash}>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 30,
+                    paddingTop: 50,
+                    paddingBottom: 20
+                }}>
+                    <TouchableOpacity style={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        padding: 12,
+                        borderRadius: 25,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }} onPress={toggleFlash}>
                         <Ionicons
                             name={flash === 'on' ? 'flash' : 'flash-off'}
                             size={24}
@@ -114,63 +165,135 @@ export default function CameraScreen() {
                         />
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.controlButton} onPress={toggleCameraFacing}>
+                    <TouchableOpacity style={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        padding: 12,
+                        borderRadius: 25,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }} onPress={toggleCameraFacing}>
                         <Ionicons name="camera-reverse" size={24} color="white"/>
                     </TouchableOpacity>
                 </View>
 
                 {/* Bottom Controls */}
-                <View style={styles.bottomControls}>
+                <View style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    paddingBottom: 40,
+                    alignItems: 'center'
+                }}>
                     {/* Timer Options */}
-                    <View style={styles.timerContainer}>
+                    <View style={{
+                        flexDirection: 'row',
+                        marginBottom: 30,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        borderRadius: 25,
+                        padding: 8
+                    }}>
                         <TouchableOpacity
                             style={[
-                                styles.timerButton,
-                                timer === 0 && styles.timerButtonActive
+                                {
+                                    paddingHorizontal: 15,
+                                    paddingVertical: 8,
+                                    marginHorizontal: 5,
+                                    borderRadius: 20
+                                },
+                                timer === 0 && {backgroundColor: '#007AFF'}
                             ]}
                             onPress={() => setTimerLength(0)}
                         >
-                            <Text style={styles.timerButtonText}>No Timer</Text>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 14,
+                                fontWeight: '500'
+                            }}>No Timer</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[
-                                styles.timerButton,
-                                timer === 3 && styles.timerButtonActive
+                                {
+                                    paddingHorizontal: 15,
+                                    paddingVertical: 8,
+                                    marginHorizontal: 5,
+                                    borderRadius: 20
+                                },
+                                timer === 3 && {backgroundColor: '#007AFF',}
                             ]}
                             onPress={() => setTimerLength(3)}
                         >
-                            <Text style={styles.timerButtonText}>3s</Text>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 14,
+                                fontWeight: '500'
+                            }}>3s</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[
-                                styles.timerButton,
-                                timer === 5 && styles.timerButtonActive
+                                {
+                                    paddingHorizontal: 15,
+                                    paddingVertical: 8,
+                                    marginHorizontal: 5,
+                                    borderRadius: 20
+                                },
+                                timer === 5 && {backgroundColor: '#007AFF',}
                             ]}
                             onPress={() => setTimerLength(5)}
                         >
-                            <Text style={styles.timerButtonText}>5s</Text>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 14,
+                                fontWeight: '500'
+                            }}>5s</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={[
-                                styles.timerButton,
-                                timer === 10 && styles.timerButtonActive
+                                {
+                                    paddingHorizontal: 15,
+                                    paddingVertical: 8,
+                                    marginHorizontal: 5,
+                                    borderRadius: 20
+                                },
+                                timer === 10 && {backgroundColor: '#007AFF',}
                             ]}
                             onPress={() => setTimerLength(10)}
                         >
-                            <Text style={styles.timerButtonText}>10s</Text>
+                            <Text style={{
+                                color: 'white',
+                                fontSize: 14,
+                                fontWeight: '500'
+                            }}>10s</Text>
                         </TouchableOpacity>
                     </View>
 
                     {/* Capture Button */}
                     <TouchableOpacity
-                        style={[styles.captureButton, isCapturing && styles.captureButtonDisabled]}
+                        style={[{
+                            width: 80,
+                            height: 80,
+                            borderRadius: 40,
+                            backgroundColor: 'white',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            borderWidth: 4,
+                            borderColor: '#ddd'
+                        }, isCapturing && {
+                            backgroundColor: '#ccc',
+                            borderColor: '#999'
+                        }]}
                         onPress={handleCapture}
                         disabled={isCapturing}
                     >
                         {isCapturing ? (
                             <ActivityIndicator size="large" color="white"/>
                         ) : (
-                            <View style={styles.captureButtonInner}/>
+                            <View style={{
+                                width: 60,
+                                height: 60,
+                                borderRadius: 30,
+                                backgroundColor: '#ff3b30'
+                            }}/>
                         )}
                     </TouchableOpacity>
                 </View>
@@ -178,115 +301,3 @@ export default function CameraScreen() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#000',
-    },
-    camera: {
-        flex: 1,
-    },
-    permissionContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
-    permissionText: {
-        fontSize: 16,
-        textAlign: 'center',
-        marginBottom: 20,
-        color: '#333',
-    },
-    permissionButton: {
-        backgroundColor: '#007AFF',
-        paddingHorizontal: 20,
-        paddingVertical: 10,
-        borderRadius: 8,
-    },
-    permissionButtonText: {
-        color: 'white',
-        fontSize: 16,
-    },
-    topControls: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 30,
-        paddingTop: 50,
-        paddingBottom: 20,
-    },
-    controlButton: {
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        padding: 12,
-        borderRadius: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    bottomControls: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        paddingBottom: 40,
-        alignItems: 'center',
-    },
-    timerContainer: {
-        flexDirection: 'row',
-        marginBottom: 30,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        borderRadius: 25,
-        padding: 8,
-    },
-    timerButton: {
-        paddingHorizontal: 15,
-        paddingVertical: 8,
-        marginHorizontal: 5,
-        borderRadius: 20,
-    },
-    timerButtonActive: {
-        backgroundColor: '#007AFF',
-    },
-    timerButtonText: {
-        color: 'white',
-        fontSize: 14,
-        fontWeight: '500',
-    },
-    captureButton: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
-        backgroundColor: 'white',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 4,
-        borderColor: '#ddd',
-    },
-    captureButtonDisabled: {
-        backgroundColor: '#ccc',
-        borderColor: '#999',
-    },
-    captureButtonInner: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        backgroundColor: '#ff3b30',
-    },
-    countdownContainer: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: [{translateX: -50}, {translateY: -50}],
-        backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        borderRadius: 50,
-        width: 100,
-        height: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    countdownText: {
-        fontSize: 48,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-});
