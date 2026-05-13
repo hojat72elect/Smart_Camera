@@ -9,7 +9,6 @@ A feature-rich React Native camera app built with Expo SDK.
 3. **Camera Switching** - Toggle between front and rear cameras
 4. **Save to Device** - Automatically save captured photos to device gallery
 5. **Flash Control** - Toggle flash on/off for image capture
-6. **Timer Function** - Set timer delays (3s, 5s, 10s) for photo capture
 
 ## Installation
 
@@ -23,17 +22,10 @@ bun install
 bun run start
 ```
 
-3. Run on your preferred platform:
-```bash
-# For iOS
-bun run ios
+3. Run the app (right now we only support Android):
 
 # For Android
 bun run android
-
-# For Web (limited camera support)
-bun run web
-```
 
 ## Permissions
 
@@ -43,27 +35,13 @@ This app requires the following permissions:
 
 These permissions are automatically requested when you first use the camera.
 
-## Usage
-
-1. Grant camera permissions when prompted
-2. Use the top controls to:
-   - Toggle flash on/off
-   - Switch between front and rear cameras
-3. Use the timer buttons to set a delay before capture
-4. Tap the capture button to take a photo
-5. Photos are automatically saved to your device's photo gallery
-
-## Technical Details
+## TechStack
 
 - Built with React Native and Expo SDK
 - Uses `expo-camera` for camera functionality
 - Uses `expo-media-library` for saving photos
 - TypeScript for type safety
 - Responsive design for different screen sizes
-
-## Development
-
-This project was created using Expo's blank template with TypeScript support.
 
 ## License
 
