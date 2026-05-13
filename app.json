@@ -29,8 +29,13 @@
       "permissions": [
         "CAMERA",
         "WRITE_EXTERNAL_STORAGE",
-        "READ_EXTERNAL_STORAGE"
-      ]
+        "READ_EXTERNAL_STORAGE",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ],
+      "package": "ir.hojat.smart_camera"
     },
     "web": {
       "favicon": "./assets/favicon.png"
