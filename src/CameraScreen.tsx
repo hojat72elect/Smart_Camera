@@ -4,6 +4,9 @@ import {CameraType, CameraView, FlashMode, useCameraPermissions} from 'expo-came
 import * as MediaLibrary from 'expo-media-library';
 import {Ionicons} from '@expo/vector-icons';
 
+/**
+ * The main screen showing a preview of the Camera.
+ */
 export function CameraScreen() {
 
     const [permission, requestPermission] = useCameraPermissions();
@@ -13,6 +16,7 @@ export function CameraScreen() {
     const cameraRef = useRef<CameraView>(null);
 
     if (!permission) {
+        // There was an error while requesting camera permission.
         return <View style={{
             flex: 1,
             backgroundColor: '#000'
@@ -20,6 +24,7 @@ export function CameraScreen() {
     }
 
     if (!permission.granted) {
+        // Permission is not granted
         return (
             <View style={{
                 flex: 1,
