@@ -2,7 +2,6 @@ import React, {useRef, useState} from 'react';
 import {ActivityIndicator, Text, ToastAndroid, TouchableOpacity, View,} from 'react-native';
 import {CameraType, CameraView, FlashMode, useCameraPermissions} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
-import {Ionicons} from '@expo/vector-icons';
 
 /**
  * The main screen showing a preview of the Camera.
@@ -11,7 +10,6 @@ export function CameraScreen() {
 
     const [permission, requestPermission] = useCameraPermissions();
     const [facing, setFacing] = useState<CameraType>('back');
-    const [flash, setFlash] = useState<FlashMode>('off');
     const [isCapturing, setIsCapturing] = useState<boolean>(false);
     const cameraRef = useRef<CameraView>(null);
 
@@ -57,10 +55,6 @@ export function CameraScreen() {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     };
 
-    const toggleFlash = () => {
-        setFlash(current => (current === 'off' ? 'on' : 'off'));
-    };
-
     const takePicture = async () => {
         if (cameraRef.current && !isCapturing) {
             setIsCapturing(true);
@@ -95,41 +89,19 @@ export function CameraScreen() {
             <CameraView
                 style={{flex: 1}}
                 facing={facing}
-                flash={flash}
                 ref={cameraRef}
             >
-                {/* Top Controls */}
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingHorizontal: 30,
-                    paddingTop: 50,
-                    paddingBottom: 20
-                }}>
-                    <TouchableOpacity style={{
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        padding: 12,
-                        borderRadius: 25,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }} onPress={toggleFlash}>
-                        <Ionicons
-                            name={flash === 'on' ? 'flash' : 'flash-off'}
-                            size={24}
-                            color="white"
-                        />
-                    </TouchableOpacity>
 
-                    <TouchableOpacity style={{
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        padding: 12,
-                        borderRadius: 25,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }} onPress={toggleCameraFacing}>
-                        <Ionicons name="camera-reverse" size={24} color="white"/>
-                    </TouchableOpacity>
-                </View>
+                {/*This is the camera swap button*/}
+                {/*<TouchableOpacity style={{*/}
+                {/*    backgroundColor: 'rgba(0, 0, 0, 0.5)',*/}
+                {/*    padding: 12,*/}
+                {/*    borderRadius: 25,*/}
+                {/*    alignItems: 'center',*/}
+                {/*    justifyContent: 'center'*/}
+                {/*}} onPress={toggleCameraFacing}>*/}
+                {/*    <Ionicons name="camera-reverse" size={24} color="white"/>*/}
+                {/*</TouchableOpacity>*/}
 
                 {/* Bottom Controls */}
                 <View style={{
