@@ -58,19 +58,17 @@ export function AutoScrollingTabs() {
                         >
                             <TouchableOpacity
                                 onPress={() => handleTabPress(category)}
-                                style={[{
+                                style={{
                                     paddingHorizontal: 16,
                                     paddingVertical: 10,
                                     borderRadius: 20,
-                                    backgroundColor: '#f3f4f6',
-                                }, isActive && {backgroundColor: '#3b82f6'}]}
-                                activeOpacity={0.7}
+                                }}
                             >
                                 <Text style={[{
                                     fontSize: 14,
                                     fontWeight: '600',
-                                    color: '#4b5563',
-                                }, isActive && {color: '#fff'}]}>
+                                    color: '#D3D3D3',
+                                }, isActive && {color: '#00f'}]}>
                                     {category}
                                 </Text>
                             </TouchableOpacity>
