@@ -38,11 +38,11 @@ export function AutoScrollingTabs() {
         }}>
             <ScrollView
                 ref={scrollViewRef}
-                horizontal
+                horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={{
-                    paddingHorizontal: 16,
-                    gap: 12,
+                    paddingHorizontal: 10,
+                    gap: 10,
                 }}
             >
                 {CATEGORIES.map((category) => {
@@ -60,15 +60,15 @@ export function AutoScrollingTabs() {
                                 onPress={() => handleTabPress(category)}
                                 style={{
                                     paddingHorizontal: 16,
-                                    paddingVertical: 10,
+                                    paddingVertical: 0,
                                     borderRadius: 20,
                                 }}
                             >
                                 <Text style={[{
                                     fontSize: 14,
                                     fontWeight: '600',
-                                    color: '#D3D3D3',
-                                }, isActive && {color: '#00f'}]}>
+                                    color: '#595F5FFF',
+                                }, isActive && {color: '#fff'}]}>
                                     {category}
                                 </Text>
                             </TouchableOpacity>

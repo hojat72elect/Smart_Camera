@@ -171,9 +171,9 @@ export function CameraScreen() {
                             <Ionicons name="camera-reverse" size={24} color="white"/>
                         </TouchableOpacity>
                     </View>
-                    <AutoScrollingTabs/>
                 </View>
             </CameraView>
+            <AutoScrollingTabs/>
         </View>
     );
 }
