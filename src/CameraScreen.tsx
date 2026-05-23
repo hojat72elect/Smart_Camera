@@ -3,6 +3,7 @@ import {ActivityIndicator, Text, ToastAndroid, TouchableOpacity, View,} from 're
 import {CameraType, CameraView, useCameraPermissions} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import {Ionicons} from '@expo/vector-icons';
+import {AutoScrollingTabs} from "./AutoScrollingTabs";
 
 /**
  * The main screen showing a preview of the Camera.
@@ -99,73 +100,78 @@ export function CameraScreen() {
             >
 
 
-                {/* Bottom Controls */}
                 <View style={{
                     position: 'absolute',
-                    flexDirection: 'row',
-                    justifyContent: 'space-evenly',
+                    flexDirection: "column",
                     bottom: 0,
                     left: 0,
                     right: 0,
                     paddingBottom: 40,
-                    alignItems: 'center'
                 }}>
+                    {/* Bottom Controls */}
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center'
+                    }}>
 
-                    {/*The gallery button*/}
-                    <TouchableOpacity
-                        style={{
-                            width: 50,
-                            height: 50,
-                            backgroundColor: '#ccc',
-                            borderRadius: 40,
-                        }}
-                        onPress={goToGallery}
-                        disabled={isCapturing}
-                    >
-                        {/*todo : inside the gallery button, we show a thumbnail of the last photo captured*/}
+                        {/*The gallery button*/}
+                        <TouchableOpacity
+                            style={{
+                                width: 50,
+                                height: 50,
+                                backgroundColor: '#ccc',
+                                borderRadius: 40,
+                            }}
+                            onPress={goToGallery}
+                            disabled={isCapturing}
+                        >
+                            {/*todo : inside the gallery button, we show a thumbnail of the last photo captured*/}
 
-                    </TouchableOpacity>
+                        </TouchableOpacity>
 
-                    {/* Capture Button */}
-                    <TouchableOpacity
-                        style={[{
-                            width: 80,
-                            height: 80,
-                            borderRadius: 40,
-                            backgroundColor: 'white',
-                            justifyContent: 'center',
+                        {/* Capture Button */}
+                        <TouchableOpacity
+                            style={[{
+                                width: 80,
+                                height: 80,
+                                borderRadius: 40,
+                                backgroundColor: 'white',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: 4,
+                                borderColor: '#ddd'
+                            }, isCapturing && {
+                                backgroundColor: '#ccc',
+                                borderColor: '#999'
+                            }]}
+                            onPress={handleCapture}
+                            disabled={isCapturing}
+                        >
+                            {isCapturing ? (
+                                <ActivityIndicator size="large" color="white"/>
+                            ) : (
+                                <View style={{
+                                    width: 60,
+                                    height: 60,
+                                    borderRadius: 30,
+                                    backgroundColor: '#ff3b30'
+                                }}/>
+                            )}
+                        </TouchableOpacity>
+
+
+                        <TouchableOpacity style={{
+                            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                            padding: 12,
+                            borderRadius: 25,
                             alignItems: 'center',
-                            borderWidth: 4,
-                            borderColor: '#ddd'
-                        }, isCapturing && {
-                            backgroundColor: '#ccc',
-                            borderColor: '#999'
-                        }]}
-                        onPress={handleCapture}
-                        disabled={isCapturing}
-                    >
-                        {isCapturing ? (
-                            <ActivityIndicator size="large" color="white"/>
-                        ) : (
-                            <View style={{
-                                width: 60,
-                                height: 60,
-                                borderRadius: 30,
-                                backgroundColor: '#ff3b30'
-                            }}/>
-                        )}
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity style={{
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        padding: 12,
-                        borderRadius: 25,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                    }} onPress={toggleCameraFacing}>
-                        <Ionicons name="camera-reverse" size={24} color="white"/>
-                    </TouchableOpacity>
+                            justifyContent: 'center'
+                        }} onPress={toggleCameraFacing}>
+                            <Ionicons name="camera-reverse" size={24} color="white"/>
+                        </TouchableOpacity>
+                    </View>
+                    <AutoScrollingTabs/>
                 </View>
             </CameraView>
         </View>
