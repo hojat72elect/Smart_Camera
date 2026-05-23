@@ -1,7 +1,8 @@
 import React, {useRef, useState} from 'react';
 import {ActivityIndicator, Text, ToastAndroid, TouchableOpacity, View,} from 'react-native';
-import {CameraType, CameraView, FlashMode, useCameraPermissions} from 'expo-camera';
+import {CameraType, CameraView, useCameraPermissions} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
+import {Ionicons} from '@expo/vector-icons';
 
 /**
  * The main screen showing a preview of the Camera.
@@ -92,20 +93,12 @@ export function CameraScreen() {
                 ref={cameraRef}
             >
 
-                {/*This is the camera swap button*/}
-                {/*<TouchableOpacity style={{*/}
-                {/*    backgroundColor: 'rgba(0, 0, 0, 0.5)',*/}
-                {/*    padding: 12,*/}
-                {/*    borderRadius: 25,*/}
-                {/*    alignItems: 'center',*/}
-                {/*    justifyContent: 'center'*/}
-                {/*}} onPress={toggleCameraFacing}>*/}
-                {/*    <Ionicons name="camera-reverse" size={24} color="white"/>*/}
-                {/*</TouchableOpacity>*/}
 
                 {/* Bottom Controls */}
                 <View style={{
                     position: 'absolute',
+                    flexDirection: 'row',
+                    justifyContent: 'space-evenly',
                     bottom: 0,
                     left: 0,
                     right: 0,
@@ -141,6 +134,17 @@ export function CameraScreen() {
                                 backgroundColor: '#ff3b30'
                             }}/>
                         )}
+                    </TouchableOpacity>
+
+
+                    <TouchableOpacity style={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        padding: 12,
+                        borderRadius: 25,
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }} onPress={toggleCameraFacing}>
+                        <Ionicons name="camera-reverse" size={24} color="white"/>
                     </TouchableOpacity>
                 </View>
             </CameraView>
