@@ -33,3 +33,7 @@ And about this implementation, these are the important things to keep in mind:
 </ol>
 
 * At this time, we don't care about the **timer** and **flashlight** part of the camera.
+
+If the mockup picture above isn't clear enough for you, you can have a look at the main page of the Android camera app, which closely resembles what we have in mind:
+
+<img width="618" height="1280" alt="Image" src="./android_cam.jpg" />
