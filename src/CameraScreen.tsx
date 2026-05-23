@@ -82,6 +82,11 @@ export function CameraScreen() {
         takePicture();
     };
 
+    const goToGallery = () => {
+        console.log("User wants to go to the gallery");
+        ToastAndroid.show("\"Gallery\" is not implemented yet!!!", ToastAndroid.SHORT);
+    };
+
     return (
         <View style={{
             flex: 1,
@@ -105,6 +110,21 @@ export function CameraScreen() {
                     paddingBottom: 40,
                     alignItems: 'center'
                 }}>
+
+                    {/*The gallery button*/}
+                    <TouchableOpacity
+                        style={{
+                            width: 50,
+                            height: 50,
+                            backgroundColor: '#ccc',
+                            borderRadius: 40,
+                        }}
+                        onPress={goToGallery}
+                        disabled={isCapturing}
+                    >
+                        {/*todo : inside the gallery button, we show a thumbnail of the last photo captured*/}
+
+                    </TouchableOpacity>
 
                     {/* Capture Button */}
                     <TouchableOpacity
