@@ -1,15 +1,16 @@
 import React, {useRef, useState} from 'react';
-import {ActivityIndicator, Text, ToastAndroid, TouchableOpacity, View,} from 'react-native';
-import {NativeModules, Platform} from 'react-native';
+import {ActivityIndicator, NativeModules, Platform, Text, ToastAndroid, TouchableOpacity, View,} from 'react-native';
 import {CameraType, CameraView, useCameraPermissions} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import {Ionicons} from '@expo/vector-icons';
 import {AutoScrollingTabs} from "./AutoScrollingTabs";
+import type {NativeStackScreenProps} from '@react-navigation/native-stack';
+import type {RootStackParamList} from '../App';
 
 /**
  * The main screen showing a preview of the Camera.
  */
-export function CameraScreen() {
+export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParamList, 'Camera'>) {
 
     const [permission, requestPermission] = useCameraPermissions();
     const [facing, setFacing] = useState<CameraType>('back');
@@ -109,8 +110,7 @@ export function CameraScreen() {
     };
 
     const goToGallery = () => {
-        console.log("User wants to go to the gallery");
-        ToastAndroid.show("\"Gallery\" is not implemented yet!!!", ToastAndroid.SHORT);
+        navigation.navigate('Gallery');
     };
 
     return (
