@@ -1,5 +1,6 @@
 import React, {useRef, useState} from 'react';
 import {ActivityIndicator, Text, ToastAndroid, TouchableOpacity, View,} from 'react-native';
+import {NativeModules, Platform} from 'react-native';
 import {CameraType, CameraView, useCameraPermissions} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import {Ionicons} from '@expo/vector-icons';
@@ -57,6 +58,18 @@ export function CameraScreen() {
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     };
 
+    const ensureSmartCameraAlbum = async (asset: MediaLibrary.Asset) => {
+        const albumName = 'SmartCamera';
+        const existingAlbum = await MediaLibrary.getAlbumAsync(albumName);
+
+        if (!existingAlbum) {
+            await MediaLibrary.createAlbumAsync(albumName, asset, false);
+            return;
+        }
+
+        await MediaLibrary.addAssetsToAlbumAsync([asset], existingAlbum, false);
+    };
+
     const takePicture = async () => {
         if (cameraRef.current && !isCapturing) {
             setIsCapturing(true);
@@ -67,7 +80,19 @@ export function CameraScreen() {
                 });
 
                 if (photo!.uri) {
-                    await MediaLibrary.saveToLibraryAsync(photo!.uri);
+                    // First make sure we're in Android and the customized native function exists
+                    if (Platform.OS === 'android' && NativeModules.SmartCameraMedia?.saveJpegToDcimSmartCamera) {
+                        await NativeModules.SmartCameraMedia.saveJpegToDcimSmartCamera(photo!.uri);
+                    } else {
+                        const mediaPerm = await MediaLibrary.requestPermissionsAsync();
+                        if (!mediaPerm.granted) {
+                            ToastAndroid.show("Storage permission is required to save photos", ToastAndroid.SHORT);
+                            return;
+                        }
+
+                        const asset = await MediaLibrary.createAssetAsync(photo!.uri);
+                        await ensureSmartCameraAlbum(asset);
+                    }
                     ToastAndroid.show("photo was saved successfully", ToastAndroid.SHORT);
                 }
             } catch (error) {
