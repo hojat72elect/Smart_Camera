@@ -44,27 +44,9 @@ if (getRNMinorVersion() >= 75) {
   }
 }
 
-rootProject.name = 'SmartCamera'
+rootProject.name = 'Smart Camera'
 
 dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
-  repositories {
-    google()
-    mavenCentral()
-    maven { url 'https://www.jitpack.io' }
-    maven {
-      // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-      url(new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim(), "../android"))
-    }
-    maven {
-      // expo-camera bundles a custom com.google.android:cameraview
-      url(new File(["node", "--print", "require.resolve('expo-camera/package.json')"].execute(null, rootDir).text.trim(), "../android/maven"))
-    }
-    maven {
-      // Android JSC is installed from npm
-      url(new File(["node", "--print", "require.resolve('jsc-android/package.json', { paths: [require.resolve('react-native/package.json')] })"].execute(null, rootDir).text.trim(), "../dist"))
-    }
-  }
   versionCatalogs {
     reactAndroidLibs {
       from(files(new File(["node", "--print", "require.resolve('react-native/package.json')"].execute(null, rootDir).text.trim(), "../gradle/libs.versions.toml")))
