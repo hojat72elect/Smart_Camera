@@ -20,7 +20,7 @@ import type {RootStackParamList} from '../App';
  */
 export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParamList, 'Camera'>) {
 
-    const CATEGORIES = ["Panorama", "Photo", "Video", "Beautify"];
+    const CATEGORIES = ["Photo", "Panorama", "Video", "Beautify"];
 
     const [permission, requestPermission] = useCameraPermissions();
     const [facing, setFacing] = useState<CameraType>('back');
@@ -28,7 +28,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
     const cameraRef = useRef<CameraView>(null);
     const scrollViewRef = useRef<ScrollView>(null);
     const itemRefs = useRef<{ [key: string]: View | null }>({});
-    const [activeTab, setActiveTab] = useState(CATEGORIES[0]);
+    const [activeTab, setActiveTab] = useState(CATEGORIES[0]); // Default mode of the camera is "Photo"
 
     const handleTabPress = (tabName: string) => {
         // Execute the onClick functionality
