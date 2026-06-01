@@ -31,9 +31,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
     const [activeTab, setActiveTab] = useState(CATEGORIES[0]); // Default mode of the camera is "Photo"
 
     const handleTabPress = (tabName: string) => {
-        // Execute the onClick functionality
         setActiveTab(tabName);
-        console.log(`Executing onClick action for: ${tabName}`);
 
         // Animate scroll to the clicked item
         const selectedItem = itemRefs.current[tabName];
@@ -142,7 +140,24 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
     };
 
     const handleCapture = () => {
-        takePicture();
+        switch (activeTab) {
+            case "Photo": {
+                takePicture();
+                break;
+            }
+            case "Panorama": {
+                ToastAndroid.show("User wants to take a panorama", ToastAndroid.SHORT);
+                break;
+            }
+            case "Video": {
+                ToastAndroid.show("User wants to take a video", ToastAndroid.SHORT);
+                break;
+            }
+            case "Beautify": {
+                ToastAndroid.show("User wants to take a beautified picture", ToastAndroid.SHORT);
+                break;
+            }
+        }
     };
 
     const goToGallery = () => {
