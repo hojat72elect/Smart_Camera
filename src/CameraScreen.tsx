@@ -40,7 +40,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
         if (selectedItem && scrollViewRef.current) {
             // measureLayout calculates coordinates relative to the ScrollView node
             selectedItem.measureLayout(
-                scrollViewRef.current,
+                scrollViewRef.current as any,
                 (x, y) => {
                     scrollViewRef.current?.scrollTo({
                         x: x - 16, // Offsets slightly to keep previous tab peeking
