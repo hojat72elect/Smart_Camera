@@ -25,6 +25,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
     const [permission, requestPermission] = useCameraPermissions();
     const [facing, setFacing] = useState<CameraType>('back');
     const [isCapturing, setIsCapturing] = useState<boolean>(false);
+    const [isRecording, setIsRecording] = useState<boolean>(false);
     const cameraRef = useRef<CameraView>(null);
     const scrollViewRef = useRef<ScrollView>(null);
     const itemRefs = useRef<{ [key: string]: View | null }>({});
@@ -39,7 +40,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
             // measureLayout calculates coordinates relative to the ScrollView node
             selectedItem.measureLayout(
                 scrollViewRef.current as any,
-                (x, y) => {
+                (x, _) => {
                     scrollViewRef.current?.scrollTo({
                         x: x - 16, // Offsets slightly to keep previous tab peeking
                         y: 0,
@@ -139,6 +140,14 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
         }
     };
 
+    const handleRecordingVideo = () => {
+        if (!isRecording) {
+            setIsRecording(true);
+        } else {
+            setIsRecording(false);
+        }
+    };
+
     const handleCapture = () => {
         switch (activeTab) {
             case "Photo": {
@@ -150,7 +159,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
                 break;
             }
             case "Video": {
-                ToastAndroid.show("User wants to take a video", ToastAndroid.SHORT);
+                handleRecordingVideo();
                 break;
             }
             case "Beautify": {
@@ -200,7 +209,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
                                 borderRadius: 40,
                             }}
                             onPress={goToGallery}
-                            disabled={isCapturing}
+                            disabled={isCapturing || isRecording}
                         >
                             {/*todo : inside the gallery button, we show a thumbnail of the last photo captured*/}
 
@@ -217,7 +226,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
                                 alignItems: 'center',
                                 borderWidth: 4,
                                 borderColor: '#ddd'
-                            }, isCapturing && {
+                            }, (isCapturing || isRecording) && {
                                 backgroundColor: '#ccc',
                                 borderColor: '#999'
                             }]}
@@ -226,6 +235,13 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
                         >
                             {isCapturing ? (
                                 <ActivityIndicator size="large" color="white"/>
+                            ) : isRecording ? (
+                                <View style={{
+                                    width: 30,
+                                    height: 30,
+                                    borderRadius: 4,
+                                    backgroundColor: '#ff3b30'
+                                }}/>
                             ) : (
                                 <View style={{
                                     width: 60,
