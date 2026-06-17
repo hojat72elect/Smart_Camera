@@ -4,6 +4,7 @@
 export type GalleryItem = {
     id: string;
     uri: string;
+    mediaType: 'photo' | 'video';
     width?: number;
     height?: number;
     creationTime?: number;

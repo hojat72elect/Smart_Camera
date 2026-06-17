@@ -1,5 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {ActivityIndicator, FlatList, Image, Modal, Pressable, Text, useWindowDimensions, View,} from 'react-native';
+import {Video, ResizeMode} from 'expo-av';
+import {Ionicons} from '@expo/vector-icons';
 import {getAlbumAsync, getAssetsAsync, requestPermissionsAsync} from 'expo-media-library';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
 import type {RootStackParamList} from '../App';
@@ -21,7 +23,7 @@ export function GalleryScreen({navigation}: NativeStackScreenProps<RootStackPara
             const perm = await requestPermissionsAsync();
             if (!perm.granted) {
                 setAllGalleryItems([]);
-                setError('Media library permission is required to show your photos.');
+                setError('Media library permission is required to show your photos and videos.');
                 return;
             }
 
@@ -33,23 +35,24 @@ export function GalleryScreen({navigation}: NativeStackScreenProps<RootStackPara
 
             const page = await getAssetsAsync({
                 album,
-                mediaType: ['photo'],
+                mediaType: ['photo', 'video'],
                 sortBy: [['creationTime', false]],
                 first: 200,
             });
 
             setAllGalleryItems(
-                page.assets.map(a => ({
-                    id: a.id,
-                    uri: a.uri,
-                    width: a.width,
-                    height: a.height,
-                    creationTime: a.creationTime,
+                page.assets.map(asset => ({
+                    id: asset.id,
+                    uri: asset.uri,
+                    mediaType: asset.mediaType === 'video' ? 'video' : 'photo',
+                    width: asset.width,
+                    height: asset.height,
+                    creationTime: asset.creationTime,
                 })),
             );
         } catch (e) {
             console.error(e);
-            setError('Failed to load photos.');
+            setError('Failed to load media.');
         } finally {
             setIsLoading(false);
         }
@@ -70,7 +73,7 @@ export function GalleryScreen({navigation}: NativeStackScreenProps<RootStackPara
         return (
             <View style={{padding: 20}}>
                 <Text style={{color: '#333', textAlign: 'center'}}>
-                    No photos yet. Capture a photo and it will appear here.
+                    No media yet. Capture a photo or video and it will appear here.
                 </Text>
             </View>
         );
@@ -80,6 +83,8 @@ export function GalleryScreen({navigation}: NativeStackScreenProps<RootStackPara
         setViewerIndex(index);
         setIsViewerOpen(true);
     }, []);
+
+    const viewerItem = allGalleryItems[viewerIndex];
 
     return (
         <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -123,6 +128,19 @@ export function GalleryScreen({navigation}: NativeStackScreenProps<RootStackPara
                                 style={{flex: 1, borderRadius: 6, backgroundColor: '#eee'}}
                                 resizeMode="cover"
                             />
+                            {item.mediaType === 'video' && (
+                                <View style={{
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    right: 0,
+                                    bottom: 0,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}>
+                                    <Ionicons name="play-circle" size={36} color="rgba(255,255,255,0.9)"/>
+                                </View>
+                            )}
                         </Pressable>
                     )}
                 />
@@ -171,11 +189,21 @@ export function GalleryScreen({navigation}: NativeStackScreenProps<RootStackPara
                                 justifyContent: 'center',
                                 alignItems: 'center'
                             }}>
-                                <Image
-                                    source={{uri: item.uri}}
-                                    style={{width: '100%', height: '100%'}}
-                                    resizeMode="contain"
-                                />
+                                {item.mediaType === 'video' ? (
+                                    <Video
+                                        source={{uri: item.uri}}
+                                        style={{width: '100%', height: '100%'}}
+                                        useNativeControls
+                                        resizeMode={ResizeMode.CONTAIN}
+                                        shouldPlay={item.id === viewerItem?.id}
+                                    />
+                                ) : (
+                                    <Image
+                                        source={{uri: item.uri}}
+                                        style={{width: '100%', height: '100%'}}
+                                        resizeMode="contain"
+                                    />
+                                )}
                             </View>
                         )}
                     />
@@ -184,4 +212,3 @@ export function GalleryScreen({navigation}: NativeStackScreenProps<RootStackPara
         </View>
     );
 }
-

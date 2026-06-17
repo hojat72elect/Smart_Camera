@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import {CameraType, CameraView, useCameraPermissions} from 'expo-camera';
+import {CameraType, CameraView, useCameraPermissions, useMicrophonePermissions} from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import {Ionicons} from '@expo/vector-icons';
 import type {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -23,6 +23,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
     const CATEGORIES = ["Photo", "Panorama", "Video", "Beautify"];
 
     const [permission, requestPermission] = useCameraPermissions();
+    const [microphonePermission, requestMicrophonePermission] = useMicrophonePermissions();
     const [facing, setFacing] = useState<CameraType>('back');
     const [isCapturing, setIsCapturing] = useState<boolean>(false);
     const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -32,6 +33,9 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
     const [activeTab, setActiveTab] = useState(CATEGORIES[0]); // Default mode of the camera is "Photo"
 
     const handleTabPress = (tabName: string) => {
+        if (isRecording) {
+            return;
+        }
         setActiveTab(tabName);
 
         // Animate scroll to the clicked item
@@ -53,7 +57,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
     };
 
     if (!permission) {
-        // There was an error while requesting camera permission.
+        // Camera permissions are still loading
         return <View style={{
             flex: 1,
             backgroundColor: '#000'
@@ -94,20 +98,22 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
         setFacing(current => (current === 'back' ? 'front' : 'back'));
     };
 
-    const ensureSmartCameraAlbum = async (asset: MediaLibrary.Asset) => {
+    const saveToAppAlbum = async (localUri: string) => {
         const albumName = 'SmartCamera';
         const existingAlbum = await MediaLibrary.getAlbumAsync(albumName);
 
-        if (!existingAlbum) {
-            await MediaLibrary.createAlbumAsync(albumName, asset, false);
+        const asset = await MediaLibrary.createAssetAsync(localUri);
+
+        if (existingAlbum) {
+            await MediaLibrary.addAssetsToAlbumAsync(asset, existingAlbum);
             return;
         }
 
-        await MediaLibrary.addAssetsToAlbumAsync([asset], existingAlbum, false);
+        await MediaLibrary.createAlbumAsync(albumName, asset, true);
     };
 
     const takePicture = async () => {
-        if (cameraRef.current && !isCapturing) {
+        if (cameraRef.current && !isCapturing && !isRecording) {
             setIsCapturing(true);
             try {
                 const photo = await cameraRef.current.takePictureAsync({
@@ -115,19 +121,18 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
                     base64: false,
                 });
 
-                if (photo!.uri) {
+                if (photo?.uri) {
                     // First make sure we're in Android and the customized native function exists
                     if (Platform.OS === 'android' && NativeModules.SmartCameraMedia?.saveJpegToDcimSmartCamera) {
                         await NativeModules.SmartCameraMedia.saveJpegToDcimSmartCamera(photo!.uri);
                     } else {
-                        const mediaPerm = await MediaLibrary.requestPermissionsAsync();
+                        const mediaPerm = await MediaLibrary.requestPermissionsAsync(false, ['photo', 'video']);
                         if (!mediaPerm.granted) {
                             ToastAndroid.show("Storage permission is required to save photos", ToastAndroid.SHORT);
                             return;
                         }
 
-                        const asset = await MediaLibrary.createAssetAsync(photo!.uri);
-                        await ensureSmartCameraAlbum(asset);
+                        await saveToAppAlbum(photo!.uri);
                     }
                     ToastAndroid.show("photo was saved successfully", ToastAndroid.SHORT);
                 }
@@ -140,10 +145,49 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
         }
     };
 
-    const handleRecordingVideo = () => {
-        if (!isRecording) {
-            setIsRecording(true);
+    const saveVideo = async (uri: string) => {
+        if (Platform.OS === 'android' && NativeModules.SmartCameraMedia?.saveMp4ToDcimSmartCamera) {
+            await NativeModules.SmartCameraMedia.saveMp4ToDcimSmartCamera(uri);
         } else {
+            const mediaPerm = await MediaLibrary.requestPermissionsAsync(false, ['photo', 'video']);
+            if (!mediaPerm.granted) {
+                ToastAndroid.show("Storage permission is required to save videos", ToastAndroid.SHORT);
+                return;
+            }
+
+            await saveToAppAlbum(uri);
+        }
+        ToastAndroid.show("video was saved successfully", ToastAndroid.SHORT);
+    };
+
+    const handleRecordingVideo = async () => {
+        if (isRecording) {
+            cameraRef.current?.stopRecording();
+            return;
+        }
+
+        if (!cameraRef.current || isCapturing) {
+            return;
+        }
+
+        if (!microphonePermission?.granted) {
+            const micPerm = await requestMicrophonePermission();
+            if (!micPerm.granted) {
+                ToastAndroid.show("Microphone permission is required to record video", ToastAndroid.SHORT);
+                return;
+            }
+        }
+
+        setIsRecording(true);
+        try {
+            const video = await cameraRef.current.recordAsync();
+            if (video?.uri) {
+                await saveVideo(video.uri);
+            }
+        } catch (error) {
+            console.error('Error recording video:', error);
+            ToastAndroid.show("Failed to save the video!!!", ToastAndroid.SHORT);
+        } finally {
             setIsRecording(false);
         }
     };
@@ -181,6 +225,7 @@ export function CameraScreen({navigation}: NativeStackScreenProps<RootStackParam
             <CameraView
                 style={{flex: 1}}
                 facing={facing}
+                mode={activeTab === 'Video' ? 'video' : 'picture'}
                 ref={cameraRef}
             >
 
